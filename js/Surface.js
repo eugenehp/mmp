@@ -296,6 +296,19 @@ AEROTWIST.Surface = new function()
 		$(document.body).mousedown(callbacks.mouseDown);
 		$(document.body).mouseup(callbacks.mouseUp);
 		$(document.body).click(callbacks.mouseClick);
+
+		$(document.body).bind('touchstart',function(e){
+			e.preventDefault();
+			callbacks.touchstart(e);
+		});
+		$(document.body).bind('touchend',function(e){
+			e.preventDefault();
+			callbacks.touchend(e);
+		});
+		$(document.body).bind('touchmove',function(e){
+			e.preventDefault();
+			callbacks.touchmove(e);
+		});
 		
 		var container = $container[0];
 		container.addEventListener('dragover', cancel, false);
@@ -432,8 +445,10 @@ AEROTWIST.Surface = new function()
 	function disturbSurface(event, magnitude)
 	{
 		if(running) {
-			var mouseX	= event.offsetX || (event.clientX - 220);
-			var mouseY	= event.offsetY || event.clientY;
+			var mouseX	= event.offsetX || (event.clientX - 220) || event.pageX || event.layerX;
+			var mouseY	= event.offsetY || event.clientY || event.pageY || event.layerY;
+
+			console.log('disturbSurface',mouseX,mouseY,'magnitude',magnitude);
 			
 			var vector 	= new THREE.Vector3((mouseX / width) * 2 - 1, -(mouseY / height) * 2 + 1, 0.5);
 			projector.unprojectVector(vector, camera);
@@ -477,6 +492,18 @@ AEROTWIST.Surface = new function()
 		},
 		mouseUp:function() {
 			document.removeEventListener('mousemove', callbacks.mouseMove, false);
+		},
+		touchstart:function(event){
+			// console.log('touchstart',event);
+			disturbSurface(event, vars["magnitude"] * 5);
+		},
+		touchend:function(event){
+			// console.log('touchend',event);
+			disturbSurface(event, vars["magnitude"]);
+		},
+		touchmove:function(event){
+			// console.log('touchmove',event);
+			disturbSurface(event, vars["magnitude"]);
 		},
 		guiClick:function() {
 			var $this 	= $(this),
