@@ -11,3 +11,5 @@ Screencasts
 [iPhone 5s version] (https://www.youtube.com/watch?v=JcaX-3ulTsM&list=UUmPArFjbil-U2xWivRB6h5g)
 
 [Desktop Safari version] (https://www.youtube.com/watch?v=4KsNgytLG8M&list=UUmPArFjbil-U2xWivRB6h5g)
+
+[Touch Effect on iPhone] (http://youtu.be/1b2jATuUQ90)
